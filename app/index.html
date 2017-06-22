@@ -18,15 +18,21 @@
     <script>
       $(function() {
         $("#list").dataTable({
-          "data": list,
-          "columns": [
-            { "data": "file_id" },
-            { "data": "file_name" },
-            { "data": "file_size" },
-            { "data": "file_date" }
+          data: list,
+          columns: [
+            {},
+            {},
+            {
+              type: "num",
+              render: function(data, type, row) {
+                if(type === 'display') return data + " MB";
+                return data;
+              }
+            },
+            {}
           ],
-          "pageLength": 100,
-          "fixedHeader": true
+          pageLength: 100,
+          fixedHeader: true
         });
       });
     </script>

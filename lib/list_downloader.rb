@@ -17,13 +17,12 @@ class ListDownloader
 
   def parse(lines)
     lines.map do |line|
-      line =~ /^(.........)"(.*?)" (.*?) (.*?)$/
-      file_id = $1.strip
-      file_name = $2
-      file_size = $3
-      file_date = Date.strptime($4, '%m/%d/%Y').strftime('%Y-%m-%d')
+      /^(?<file_id>.........)"(?<file_name>.*?)" (?<file_size>.*?) (?<file_date>.*?)$/ =~ line
+      file_id.strip!
+      file_size.gsub!(/MB$/, '')
+      file_date = Date.strptime(file_date, '%m/%d/%Y').strftime('%Y-%m-%d')
 
-      { file_id: file_id, file_name: file_name, file_size: file_size, file_date: file_date }
+      [file_id, file_name, file_size, file_date]
     end
   end
 end
