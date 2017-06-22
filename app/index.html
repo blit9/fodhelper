@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>fodhelper</title>
+
+    <link rel="stylesheet" type="text/css" href="lib/Bootstrap-3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/DataTables-1.10.15/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/FixedHeader-3.1.2/css/fixedHeader.bootstrap.min.css"/>
+     
+    <script type="text/javascript" src="lib/jQuery-2.2.4/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="lib/Bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/DataTables-1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="lib/DataTables-1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="lib/FixedHeader-3.1.2/js/dataTables.fixedHeader.min.js"></script>
+
+    <script src="list.js"></script>
+    <script>
+      $(function() {
+        $("#list").dataTable({
+          "data": list,
+          "columns": [
+            { "data": "file_id" },
+            { "data": "file_name" },
+            { "data": "file_size" },
+            { "data": "file_date" }
+          ],
+          "pageLength": 100,
+          "fixedHeader": true
+        });
+      });
+    </script>
+    
+    <style>
+      body {
+        padding-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <table id="list" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>File ID</th>
+            <th>File Name</th>
+            <th>File Size</th>
+            <th>File Date</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
