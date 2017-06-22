@@ -1,13 +1,12 @@
 require 'open-uri'
-require 'cgi'
-require 'csv'
+require 'date'
 
 class ListDownloader
   def download
-    save(request_list)
+    parse(get)
   end
 
-  def request_list
+  def get
     irc_info = open("http://irc.netsplit.de/channels/?net=Rizon&chat=FODArray").read.gsub("&#8203;", "")
     irc_info =~ /List A: (.*?) List B: (.*?)</
     list_a = $1
@@ -16,17 +15,15 @@ class ListDownloader
     open(list_a).read.split("\n") + open(list_b).read.split("\n")
   end
 
-  def save(lines)
-    CSV.open(Build.lists_path, "w") do |csv|
-      lines.each do |line|
-        line =~ /^(.........)"(.*?)" (.*?) (.*?)$/
-        file_id = $1.strip
-        file_name = $2
-        file_size = $3
-        file_date = $4
+  def parse(lines)
+    lines.map do |line|
+      line =~ /^(.........)"(.*?)" (.*?) (.*?)$/
+      file_id = $1.strip
+      file_name = $2
+      file_size = $3
+      file_date = Date.strptime($4, '%m/%d/%Y').strftime('%Y-%m-%d')
 
-        csv << [file_id, file_name, file_size, file_date]
-      end
+      { file_id: file_id, file_name: file_name, file_size: file_size, file_date: file_date }
     end
   end
 end

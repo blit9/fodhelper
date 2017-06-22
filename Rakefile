@@ -1,5 +1,7 @@
 require_relative './lib/fodhelper.rb'
 
-task :lists do
-  ListDownloader.new.download
+task :build do
+  ListSaver.new(ListDownloader.new.download).save
 end
+
+task default: :build
